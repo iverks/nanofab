@@ -380,8 +380,8 @@ def create_our_flowers():
 
 def create_big_flowers_for_emile():
     # Unit is nm
-    outer_radius = 30_000
-    spacing = 200_000
+    outer_radius = 50_000
+    spacing = 300_000
 
     D = Device("mydevice")
 
@@ -393,10 +393,22 @@ def create_big_flowers_for_emile():
             )
             flower_center(D=D, radius=outer_radius / 5 / 2, center=center)
 
+    for i in range(1):
+        p = 8
+        for j in range(4):
+            center = (spacing * j, -spacing * (i + 1))
+            arc_flower(
+                D=D,
+                n_petals=p,
+                outer_radius=outer_radius,
+                inner_radius=outer_radius / 5,
+                center=center,
+            )
+
     for i in range(3):
         p = 4 + 2 * i
         for j in range(4):
-            center = (spacing * j, -spacing * (i + 1))
+            center = (spacing * j, -spacing * (i + 2))
             curved_flower_by_angle(
                 D=D,
                 n_petals=p,

@@ -1,0 +1,33 @@
+Size := 640
+Nt := 2
+
+// 5e-9 * 640 > 1500e-9 * 2
+SetGridsize(Size, 2*Size, Nt)
+SetCellsize(5e-9, 5e-9, 40e-9)
+
+Msat = 790e3
+Aex = 13e-12
+anisU = vector(0, 0, 1)
+// Ku1 = 10e4
+
+a := imageShape("mask.png")
+setgeom(a)
+m = vortex(-1, 1)
+relax()
+SaveAs(m, "B=0mT")
+
+// Comment out the relax and saveas above and load magnetisation from previous run to save some time
+// m.loadfile("t=80nm.out/t=80nm,B=0mT.ovf")
+for i := 5; i <= 5; i += 2 {
+	B_ext = vector(-i*sqrt(2)*1e-3, i*sqrt(2)*1e-3, 0.0)
+
+	minimize()
+	SaveAs(m, Sprintf("B=%dmT", i))
+}
+
+// m.loadfile("t=80nm.out/t=80nm,B=0mT.ovf")
+// for i := -1; i >= -5; i-=2 {
+//     B_ext = vector(i * 1e-3, 0.0, 0.0)
+//     minimize()
+//     SaveAs(m, Sprintf("t=80nm,%.0fmT", i))
+// }

@@ -1,0 +1,32 @@
+//mumax 3.10 [windows_amd64 go1.11.6(gc) CUDA-11.0]
+//GPU info: NVIDIA GeForce GTX 1650(4095MB), CUDA Driver 12.2, cc=7.5, using cc=75 PTX
+//(c) Arne Vansteenkiste, Dynamat LAB, Ghent University, Belgium
+//This is free software without any warranty. See license.txt
+//********************************************************************//
+//  If you use mumax in any work or publication,                      //
+//  we kindly ask you to cite the references in references.bib        //
+//********************************************************************//
+//output directory: .\petal.out/
+Size := 640
+Nt := 2
+SetGridsize(Size, 2*Size, Nt)
+SetCellsize(5e-9, 5e-9, 40e-9)
+Msat = 790e3
+Aex = 13e-12
+anisU = vector(0, 0, 1)
+a := imageShape("mask.png")
+setgeom(a)
+m = vortex(-1, 1)
+relax()
+SaveAs(m, "B=0mT")
+for i := 5; i <= 5; i += 2 {
+	B_ext = vector(-i*sqrt(2)*1e-3, i*sqrt(2)*1e-3, 0.0)
+	minimize()
+	SaveAs(m, Sprintf("B=%dmT", i))
+}
+//********************************************************************//
+//Please cite the following references, relevant for your simulation. //
+//See bibtex file in output folder for justification.                 //
+//********************************************************************//
+//   * Vansteenkiste et al., AIP Adv. 4, 107133 (2014).
+//   * Exl et al., J. Appl. Phys. 115, 17D118 (2014).
